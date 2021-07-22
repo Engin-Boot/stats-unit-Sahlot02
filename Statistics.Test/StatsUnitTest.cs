@@ -1,6 +1,7 @@
 using System;
 using Xunit;
 using System.Collections.Generic;
+using Statistics;
 
 namespace Statistics.Test
 {
@@ -10,7 +11,7 @@ namespace Statistics.Test
         public void ReportsAverageMinMax()
         {
             float epsilon = 0.001F;
-           // var statsComputer = new StatsComputer();
+            // var statsComputer = new StatsComputer();
             var computedStats = StatsComputer.CalculateStatistics(
                 new List<float> { 1.5f, 8.9f, 3.2f, 4.5f });
             Assert.True(Math.Abs(computedStats.average - 4.525) <= epsilon);
@@ -37,14 +38,14 @@ namespace Statistics.Test
         {
             var emailAlert = new EmailAlert();
             var ledAlert = new LedAlert();
-            IAlerter[] alerters = { emailAlert, ledAlert };
+            IAlert[] alerters = { emailAlert, ledAlert };
 
             const float maxThreshold = 10.2f;
             var statsAlerter = new StatsAlerter(maxThreshold, alerters);
             statsAlerter.checkAndAlert(new List<float> { 0.2f, 11.9f, 4.3f, 8.5f });
 
             Assert.True(emailAlert.emailSent);
-            Assert.True(ledAlert.ledGlows);
+            Assert.True(ledAlert.ledGlowing);
         }
     }
 }
