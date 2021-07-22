@@ -12,7 +12,7 @@ namespace Statistics.Test
             float epsilon = 0.001F;
             var statsComputer = new StatsComputer();
             var computedStats = statsComputer.CalculateStatistics(
-                new List<double> { 1.5, 8.9, 3.2, 4.5 });
+                new List<float> { 1.5f, 8.9f, 3.2f, 4.5f });
             Assert.True(Math.Abs(statsComputer.average - 4.525) <= epsilon);
             Assert.True(Math.Abs(statsComputer.max - 8.9) <= epsilon);
             Assert.True(Math.Abs(statsComputer.min - 1.5) <= epsilon);
@@ -22,14 +22,14 @@ namespace Statistics.Test
         public void ReportsNaNForEmptyInput()
         {
             var statsComputer = new StatsComputer();
-            var computedStats = statsComputer.CalculateStatistics(new List<double> { });
+            var computedStats = statsComputer.CalculateStatistics(new List<float> { });
             //All fields of computedStats (average, max, min) must be
             //Double.NaN (not-a-number), as described in
             //https://docs.microsoft.com/en-us/dotnet/api/system.double.nan?view=netcore-3.1
 
-            Assert.True(Double.IsNaN(statsComputer.average));
-            Assert.True(Double.IsNaN(statsComputer.max));
-            Assert.True(Double.IsNaN(statsComputer.min));
+            Assert.True(float.IsNaN(computedStats.average));
+            Assert.True(float.IsNaN(computedStats.max));
+            Assert.True(float.IsNaN(computedStats.min));
         }
 
         [Fact]
@@ -41,7 +41,7 @@ namespace Statistics.Test
 
             const float maxThreshold = 10.2f;
             var statsAlerter = new StatsAlerter(maxThreshold, alerters);
-            statsAlerter.checkAndAlert(new List<double> { 0.2, 11.9, 4.3, 8.5 });
+            statsAlerter.checkAndAlert(new List<float> { 0.2f, 11.9f, 4.3f, 8.5f });
 
             Assert.True(emailAlert.emailSent);
             Assert.True(ledAlert.ledGlows);
